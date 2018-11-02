@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "name": "Viktor",
+      "pictures": {
+        "dogs": [],
+        "cats": [],
+        "flowers": []
+      }
+    },
+    {
+      "id": 1,
+      "name": "Allachka",
+      "pictures": {
+        "dogs": {
+          "Dog 1": "https://lh5.googleusercontent.com/-2cuebuSKiRU/AAAAAAAAAAI/AAAAAAAAAEU/PibNivK-4U4/photo.jpg",
+          "dog2": "https://i.kinja-img.com/gawker-media/image/upload/s--WFkXeene--/c_scale,f_auto,fl_progressive,q_80,w_800/ol9ceoqxidudap8owlwn.jpg",
+          "dog 3": "https://cdn1.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg",
+          "Dog 4": "http://sphm-sww-site-production.s3-ap-southeast-1.amazonaws.com/2017/05/brown-pomeranian-dog-sleeping-on-the-frozen-water-bottle.jpg",
+          "DOg 5": "https://cdn.vox-cdn.com/thumbor/wng90rt7pFT3o_oPRNV21iK-2x8=/0x0:4560x3041/1200x800/filters:focal(1916x1157:2644x1885)/cdn.vox-cdn.com/uploads/chorus_image/image/58504395/911428568.jpg.0.jpg"
+        },
+        "cats": {
+          "Crying cat": "https://www.catster.com/wp-content/uploads/2018/05/A-gray-cat-crying-looking-upset.jpg",
+          "Angry cat": "http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg",
+          "Cat 3": "http://catsatthestudios.com/wp-content/uploads/2017/12/12920541_1345368955489850_5587934409579916708_n-2-960x410.jpg",
+          "Cat 4": "https://pbs.twimg.com/profile_images/378800000532546226/dbe5f0727b69487016ffd67a6689e75a_400x400.jpeg"
+        }
+      }
+    }
+  ]
+}
