@@ -7,6 +7,7 @@ import Image from './Image'
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom'
 
+import "../styles/Album.less";
 
 
 class Album extends React.Component {
@@ -41,10 +42,10 @@ class Album extends React.Component {
             albumPreview = (<div>
                 <h1 className={"user-name"}>Hi, {user.name} </h1>
                 {user.pictures.map((album, ind)=> <div className={"album"} key={ind}>
-                    <h3 className={"album-name"}>{album.title}</h3>
-                    <Link to={ {pathname: `/picture/${user.id}/${album.title}`, state:{name: album.title, type:"imagesPage", id:album.id}}}>
-                        <p>PISKA</p>
+                    <Link className={"album-link"} to={ {pathname: `/picture/${user.id}/${album.title}`, state:{name: album.title, type:"imagesPage", id:album.id}}}>
                         <Image name={album.title} id={album.id}/>
+                        <h3 className={"album-name"}>{album.title}</h3>
+
                     </Link>
                 </div>)}
             </div>);
