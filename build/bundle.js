@@ -42599,19 +42599,6 @@ var Album = function (_React$Component) {
                     "USER NOT FOUND "
                 );
             } else {
-                var albumsNames = [];
-                var mainAlbumPicture = [];
-
-                // for (let [key, value] of Object.entries(user.pictures)) {
-                //     albumsNames.push(key);
-                //     let allPictures = [];
-                //     for (let [keys, values] of Object.entries(value)) {
-                //         allPictures.push(values);
-                //     }
-                //     mainAlbumPicture.push(allPictures[Math.floor(Math.random()*allPictures.length)]);
-                // }
-
-
                 albumPreview = _react2.default.createElement(
                     "div",
                     null,
@@ -42633,8 +42620,13 @@ var Album = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 _reactRouterDom.Link,
-                                { to: { pathname: "/picture/" + user.id + "/" + name, state: { pictures: user.pictures[name] } } },
-                                _react2.default.createElement(_Image2.default, { name: album.title, id: album.id, type: "albumPage" })
+                                { to: { pathname: "/picture/" + user.id + "/" + album.title, state: { name: album.title, type: "imagesPage", id: album.id } } },
+                                _react2.default.createElement(
+                                    "p",
+                                    null,
+                                    "PISKA"
+                                ),
+                                _react2.default.createElement(_Image2.default, { name: album.title, id: album.id })
                             )
                         );
                     })
@@ -54884,105 +54876,116 @@ var Image = function (_React$Component) {
         (0, _classCallCheck3.default)(this, Image);
         return (0, _possibleConstructorReturn3.default)(this, (Image.__proto__ || Object.getPrototypeOf(Image)).call(this, props));
     }
-    //
-    //
-    // getBase64Image(img) {
-    //     let canvas = document.createElement("canvas");
-    //     canvas.width = img.width;
-    //     canvas.height = img.height;
-    //
-    //     let ctx = canvas.getContext("2d");
-    //     ctx.drawImage(img, 0, 0);
-    //
-    //     let dataURL = canvas.toDataURL("image/png");
-    //
-    //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-    // }
-    //
-    //
-    // readURL(e)
-    // {
-    //     console.log("READ!!");
-    //     document.getElementById("tableBanner").style.display = "block";
-    //     let input = document.querySelector('#uploadBannerImage');
-    //
-    //     if (input.files && input.files[0]) {
-    //         let reader = new FileReader();
-    //         let bannerImage = document.getElementById('tableBanner');
-    //
-    //         reader.onload = function (e) {
-    //         bannerImage.src =  e.target.result;
-    //         };
-    //         reader.readAsDataURL(input.files[0]);
-    //         let imgData = this.getBase64Image(bannerImage);
-    //         localStorage.setItem("imgData", imgData);
-    //     }
-    // }
-    //
-    //
-    // mainImageHandler(e, src, title) {
-    //     let modal = document.getElementById('myModal');
-    //     let modalImg = document.getElementById("img01");
-    //     modal.style.display = "block";
-    //     modalImg.src = src;
-    //
-    //     let modalHeader = document.querySelector(".modal-header");
-    //     modalHeader.innerHTML  = title;
-    // }
-    //
-    // closeHandler() {
-    //     let modal = document.getElementById('myModal');
-    //     modal.style.display = 'none';
-    // }
 
     (0, _createClass3.default)(Image, [{
+        key: "getBase64Image",
+        value: function getBase64Image(img) {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+
+            var dataURL = canvas.toDataURL("image/png");
+
+            return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        }
+    }, {
+        key: "readURL",
+        value: function readURL(e) {
+            console.log("READ!!");
+            document.getElementById("tableBanner").style.display = "block";
+            var input = document.querySelector('#uploadBannerImage');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                var bannerImage = document.getElementById('tableBanner');
+
+                reader.onload = function (e) {
+                    bannerImage.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+                var imgData = this.getBase64Image(bannerImage);
+                localStorage.setItem("imgData", imgData);
+            }
+        }
+    }, {
+        key: "mainImageHandler",
+        value: function mainImageHandler(e, src, title) {
+            var modal = document.getElementById('myModal');
+            var modalImg = document.getElementById("img01");
+            modal.style.display = "block";
+            modalImg.src = src;
+
+            var modalHeader = document.querySelector(".modal-header");
+            modalHeader.innerHTML = title;
+        }
+    }, {
+        key: "closeHandler",
+        value: function closeHandler() {
+            var modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+        }
+    }, {
         key: "render",
         value: function render() {
-            console.log("PROPS:", this.props);
+            var _this2 = this;
+
+            console.log("*************************** ", this.props, this.props.location);
 
             var images = this.props.images;
 
 
-            if (!images || images.id === undefined) {
+            if (!this.props.location && (!images || images.id === undefined)) {
+                console.log("ONE", this.props.id);
                 this.props.fetchImagesById(this.props.id);
                 return null;
             }
 
-            console.log("Images in album:", images);
+            console.log("Images after fetching ", images);
 
-            var imagePreview = _react2.default.createElement("div", null);
-            if (this.props && this.props.type == "albumPage") {
-                console.log(images.images[0][2]);
-                imagePreview = _react2.default.createElement("img", { src: images.images[0][2] });
+            if (!this.props.location) {
+                return _react2.default.createElement("img", { src: images.images[0][2] });
             }
-            return imagePreview;
-            // let imagesObject = this.props.location.state;
-            // let imageNames = [];
-            // let images =[];
-            //
-            // for (let [key, value] of Object.entries(imagesObject.pictures)) {
-            //     imageNames.push(key);
-            //     images.push(value)
-            // }
-            //
-            // return (<div >
-            //
-            //     <input type='file' id="uploadBannerImage" onChange={(e) => this.readURL(e)} />
-            //     <img src="" id="tableBanner" />
-            //
-            //
-            //     {imageNames.map((name, ind)=> <div key={ind} className={"image-container"}>
-            //         <h3 className={"image-name"}>{name}</h3>
-            //         <img className={"images-mini"} src={images[ind]} onClick={(e, src, title) => this.mainImageHandler(e, images[ind], name)}/>
-            //         </div>
-            //     )}
-            //
-            //     <div id="myModal" className={"modal"}>
-            //         <h3 className={"modal-header"}></h3>
-            //         <span className={"close"} onClick={(e) => this.closeHandler(e)}>&times;</span>
-            //         <img className={"modal-content"} id="img01"/>
-            //     </div>
-            // </div>)
+
+            console.log("MORE");
+
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement("input", { type: "file", id: "uploadBannerImage", onChange: function onChange(e) {
+                        return _this2.readURL(e);
+                    } }),
+                _react2.default.createElement("img", { src: "", id: "tableBanner" }),
+                images.images.map(function (element, ind) {
+                    return _react2.default.createElement(
+                        "div",
+                        { key: ind, className: "image-container" },
+                        _react2.default.createElement(
+                            "h3",
+                            { className: "image-name" },
+                            element[0]
+                        ),
+                        _react2.default.createElement("img", { className: "images-mini", src: element[2], onClick: function onClick(e, src, title) {
+                                return _this2.mainImageHandler(e, element[1], element[0]);
+                            } })
+                    );
+                }),
+                _react2.default.createElement(
+                    "div",
+                    { id: "myModal", className: "modal" },
+                    _react2.default.createElement("h3", { className: "modal-header" }),
+                    _react2.default.createElement(
+                        "span",
+                        { className: "close", onClick: function onClick(e) {
+                                return _this2.closeHandler(e);
+                            } },
+                        "\xD7"
+                    ),
+                    _react2.default.createElement("img", { className: "modal-content", id: "img01" })
+                )
+            );
         }
     }]);
     return Image;
@@ -54990,7 +54993,8 @@ var Image = function (_React$Component) {
 
 exports.default = (0, _reactRedux.connect)(function (state, props) {
     console.log("IN CONN:", props, props.id);
-    var images = (0, _reducers.getImagesById)(state, props.id);
+    var images = [];
+    if (props.location) images = (0, _reducers.getImagesById)(state, props.location.state.id);else images = (0, _reducers.getImagesById)(state, props.id);
     return { images: images };
 }, function (dispatch) {
     return {

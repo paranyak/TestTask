@@ -38,26 +38,13 @@ class Album extends React.Component {
             albumPreview = (
                 <h1 className={"error-message"}>USER NOT FOUND </h1>)
         } else {
-            let albumsNames = [];
-            let mainAlbumPicture =[];
-
-            // for (let [key, value] of Object.entries(user.pictures)) {
-            //     albumsNames.push(key);
-            //     let allPictures = [];
-            //     for (let [keys, values] of Object.entries(value)) {
-            //         allPictures.push(values);
-            //     }
-            //     mainAlbumPicture.push(allPictures[Math.floor(Math.random()*allPictures.length)]);
-            // }
-
-
-
             albumPreview = (<div>
                 <h1 className={"user-name"}>Hi, {user.name} </h1>
                 {user.pictures.map((album, ind)=> <div className={"album"} key={ind}>
                     <h3 className={"album-name"}>{album.title}</h3>
-                    <Link to={ {pathname: `/picture/${user.id}/${name}`, state:{pictures: user.pictures[name]}}}>
-                        <Image name={album.title} id={album.id} type={"albumPage"}/>
+                    <Link to={ {pathname: `/picture/${user.id}/${album.title}`, state:{name: album.title, type:"imagesPage", id:album.id}}}>
+                        <p>PISKA</p>
+                        <Image name={album.title} id={album.id}/>
                     </Link>
                 </div>)}
             </div>);
