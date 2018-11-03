@@ -8,7 +8,6 @@ const initialState = {
 };
 
 const byId = (state={}, action) => {
-    console.log("BY ID IMG : ",  action.images);
 
     switch (action.type) {
         case 'FETCH_IMAGES_SUCCESS':
@@ -24,7 +23,6 @@ const byId = (state={}, action) => {
 }
 
 const allIds = (state=[], action) => {
-    console.log("ALL IMG : ", state, action);
 
     switch (action.type) {
         case 'FETCH_IMAGES_SUCCESS':
@@ -40,7 +38,7 @@ const allIds = (state=[], action) => {
 
 
 
-export const getImagesById = (state, id) => {console.log("in image reducer:", state.byId[id]); return state.byId[id]};
+export const getImagesById = (state, id) => { return state.byId[id]};
 
 export default combineReducers({
     byId,

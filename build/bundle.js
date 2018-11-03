@@ -14904,60 +14904,50 @@ var fetchUser = exports.fetchUser = function fetchUser(id) {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            console.log("Fetch user api/fetch 1", id);
                             dispatch(fromFetch.fetchUserStart(id));
-                            console.log("Fetch user api/fetch 2", id);
-                            _context.next = 5;
+                            _context.next = 3;
                             return fetch('https://jsonplaceholder.typicode.com/users/' + id);
 
-                        case 5:
+                        case 3:
                             response = _context.sent;
-                            _context.next = 8;
+                            _context.next = 6;
                             return response.json();
 
-                        case 8:
+                        case 6:
                             users = _context.sent;
 
-                            console.log("USER:", users);
-
                             if (response.ok) {
-                                _context.next = 16;
+                                _context.next = 13;
                                 break;
                             }
 
                             users = { id: id, error: true };
                             users = (0, _normalizr.normalize)([users], _schema.usersListSchema);
                             dispatch(fromFetch.fetchUserError(id, users.result, users.entities.users));
-                            _context.next = 31;
+                            _context.next = 25;
                             break;
 
-                        case 16:
-                            _context.next = 18;
+                        case 13:
+                            _context.next = 15;
                             return fetch('https://jsonplaceholder.typicode.com/albums?userId=' + id);
 
-                        case 18:
+                        case 15:
                             _response = _context.sent;
-                            _context.next = 21;
+                            _context.next = 18;
                             return _response.json();
 
-                        case 21:
+                        case 18:
                             album = _context.sent;
-
-                            console.log("RES2: ", album);
-
                             newUser = {};
 
                             newUser["id"] = users.id;
                             newUser["name"] = users.name;
                             newUser["pictures"] = album;
-                            console.log("new user", newUser);
-
                             newUser = (0, _normalizr.normalize)([newUser], _schema.usersListSchema);
 
-                            console.log("Fetch user api/fetch 4");
                             dispatch(fromFetch.fetchUserSuccess(id, newUser.result, newUser.entities.users));
 
-                        case 31:
+                        case 25:
                         case 'end':
                             return _context.stop();
                     }
@@ -14979,21 +14969,18 @@ var fetchImages = exports.fetchImages = function fetchImages(id) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            console.log("Fetch images api/fetch 1", id);
                             dispatch(fromFetch.fetchImageStart(id));
-                            console.log("Fetch images api/fetch 2", id);
-                            _context2.next = 5;
+                            _context2.next = 3;
                             return fetch('https://jsonplaceholder.typicode.com/photos?albumId=' + id);
 
-                        case 5:
+                        case 3:
                             response = _context2.sent;
-                            _context2.next = 8;
+                            _context2.next = 6;
                             return response.json();
 
-                        case 8:
+                        case 6:
                             images = _context2.sent;
 
-                            console.log("IMAGES:", images);
 
                             if (!response.ok) {
                                 images = { id: id, error: true };
@@ -15005,17 +14992,15 @@ var fetchImages = exports.fetchImages = function fetchImages(id) {
                                 imageAlbum["id"] = id;
                                 imageAlbum["images"] = [];
                                 for (i in images) {
-                                    console.log("I: ", images[i]);
                                     imageAlbum["images"].push([images[i].title, images[i].url, images[i].thumbnailUrl]);
                                 }
 
-                                console.log("NEW OBJ", imageAlbum);
                                 imageAlbum = (0, _normalizr.normalize)([imageAlbum], _schema.imagesListSchema);
-                                console.log("Fetch images api/fetch 4");
+
                                 dispatch(fromFetch.fetchImageSuccess(id, imageAlbum.result, imageAlbum.entities.images));
                             }
 
-                        case 11:
+                        case 8:
                         case 'end':
                             return _context2.stop();
                     }
@@ -15833,7 +15818,6 @@ var Image = function (_React$Component) {
     }, {
         key: "readURL",
         value: function readURL(e) {
-            console.log("READ!!");
             document.getElementById("tableBanner").style.display = "block";
             var input = document.querySelector('#uploadBannerImage');
 
@@ -15871,24 +15855,17 @@ var Image = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log("*************************** ", this.props, this.props.location);
-
             var images = this.props.images;
 
 
             if (!this.props.location && (!images || images.id === undefined)) {
-                console.log("ONE", this.props.id);
                 this.props.fetchImagesById(this.props.id);
                 return null;
             }
 
-            console.log("Images after fetching ", images);
-
             if (!this.props.location) {
                 return _react2.default.createElement("img", { src: images.images[0][2] });
             }
-
-            console.log("MORE");
 
             return _react2.default.createElement(
                 "div",
@@ -15950,7 +15927,6 @@ var Image = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = (0, _reactRedux.connect)(function (state, props) {
-    console.log("IN CONN:", props, props.id);
     var images = [];
     if (props.location) images = (0, _reducers.getImagesById)(state, props.location.state.id);else images = (0, _reducers.getImagesById)(state, props.id);
     return { images: images };
@@ -44208,14 +44184,10 @@ var Album = function (_React$Component) {
             var user = this.props.user;
 
 
-            console.log("USER:", user);
-
             if (!user || user.id === undefined) {
                 this.props.fetchUserById(this.props.match.params.id);
                 return null;
             }
-
-            console.log("User in album:", user, user.pictures);
 
             var albumPreview = _react2.default.createElement("div", null);
 
@@ -45001,7 +44973,6 @@ var byId = function byId() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var action = arguments[1];
 
-    console.log("by id: ", state, action);
 
     switch (action.type) {
         case 'FETCH_USER_SUCCESS':
@@ -45017,7 +44988,6 @@ var allIds = function allIds() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var action = arguments[1];
 
-    console.log("all id: ", state, action);
 
     switch (action.type) {
         case 'FETCH_USER_SUCCESS':
@@ -45034,7 +45004,6 @@ var loggedIn = function loggedIn() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var action = arguments[1];
 
-    console.log(" logged in ", state, action);
 
     switch (action.type) {
         case 'FETCH_USER_SUCCESS':
@@ -45048,7 +45017,7 @@ var loggedIn = function loggedIn() {
 };
 
 var getUserById = exports.getUserById = function getUserById(state, id) {
-    console.log("in user red:", state.byId[id]);return state.byId[id];
+    return state.byId[id];
 };
 
 exports.default = (0, _redux.combineReducers)({
@@ -53187,7 +53156,6 @@ var byId = function byId() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var action = arguments[1];
 
-    console.log("BY ID IMG : ", action.images);
 
     switch (action.type) {
         case 'FETCH_IMAGES_SUCCESS':
@@ -53203,7 +53171,6 @@ var allIds = function allIds() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var action = arguments[1];
 
-    console.log("ALL IMG : ", state, action);
 
     switch (action.type) {
         case 'FETCH_IMAGES_SUCCESS':
@@ -53217,7 +53184,7 @@ var allIds = function allIds() {
 };
 
 var getImagesById = exports.getImagesById = function getImagesById(state, id) {
-    console.log("in image reducer:", state.byId[id]);return state.byId[id];
+    return state.byId[id];
 };
 
 exports.default = (0, _redux.combineReducers)({
@@ -55378,7 +55345,6 @@ var fetchUserStart = exports.fetchUserStart = function fetchUserStart(id) {
 };
 
 var fetchUserSuccess = exports.fetchUserSuccess = function fetchUserSuccess(id, ids, users) {
-    console.log("FETCH SUCCESS", users);
     return {
         type: 'FETCH_USER_SUCCESS',
         id: id,
@@ -55388,7 +55354,6 @@ var fetchUserSuccess = exports.fetchUserSuccess = function fetchUserSuccess(id, 
 };
 
 var fetchUserError = exports.fetchUserError = function fetchUserError(id, ids, users) {
-    console.log("FETCH Error");
     return {
         type: 'FETCH_USER_ERROR',
         id: id,
@@ -55405,7 +55370,7 @@ var fetchImageStart = exports.fetchImageStart = function fetchImageStart(id) {
 };
 
 var fetchImageSuccess = exports.fetchImageSuccess = function fetchImageSuccess(id, ids, images) {
-    console.log("FETCH SUCCESS", images);
+
     return {
         type: 'FETCH_IMAGES_SUCCESS',
         id: id,
@@ -55415,7 +55380,7 @@ var fetchImageSuccess = exports.fetchImageSuccess = function fetchImageSuccess(i
 };
 
 var fetchImagesError = exports.fetchImagesError = function fetchImagesError(id, ids, images) {
-    console.log("FETCH Error");
+
     return {
         type: 'FETCH_IMAGES_ERROR',
         id: id,
@@ -55730,7 +55695,6 @@ var LogIn = function (_React$Component) {
                 error.style.visibility = "initial";
             } else {
                 error.style.visibility = "hidden";
-                console.log(loginID);
                 this.setState({ redirect: true, loginID: loginID });
             }
         }
@@ -55743,7 +55707,6 @@ var LogIn = function (_React$Component) {
                 redirect = _state.redirect,
                 loginID = _state.loginID;
 
-            console.log("render", loginID);
             return _react2.default.createElement(
                 "div",
                 { className: "log-in" },

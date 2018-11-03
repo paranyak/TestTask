@@ -31,7 +31,6 @@ class Image extends React.Component {
 
 
     readURL(e) {
-        console.log("READ!!");
         document.getElementById("tableBanner").style.display = "block";
         let input = document.querySelector('#uploadBannerImage');
 
@@ -65,26 +64,19 @@ class Image extends React.Component {
     }
 
     render() {
-        console.log("*************************** ", this.props, this.props.location);
 
         const {images} = this.props;
 
-
         if (!this.props.location && (!images || images.id === undefined)) {
-            console.log("ONE", this.props.id);
             this.props.fetchImagesById(this.props.id);
             return null;
         }
 
 
-        console.log("Images after fetching ", images);
 
         if (!this.props.location) {
             return <img src={images.images[0][2]}/>
         }
-
-        console.log("MORE");
-
 
         return (<div>
             <h1 className={"image-header"}>{this.props.location.state.name} </h1>
@@ -118,7 +110,6 @@ class Image extends React.Component {
 }
 
 export default connect((state, props) => {
-        console.log("IN CONN:", props, props.id);
         let images = [];
         if (props.location) images = getImagesById(state, props.location.state.id);
         else images = getImagesById(state, props.id);

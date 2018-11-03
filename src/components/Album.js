@@ -23,15 +23,10 @@ class Album extends React.Component {
 
         const {user} = this.props;
 
-        console.log("USER:", user);
-
         if (!user || user.id === undefined) {
             this.props.fetchUserById(this.props.match.params.id);
             return null;
         }
-
-
-        console.log("User in album:", user, user.pictures);
 
         let albumPreview = <div></div>;
 

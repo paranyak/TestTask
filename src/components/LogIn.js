@@ -22,7 +22,6 @@ class LogIn extends React.Component
             error.style.visibility = "initial";
         }else{
             error.style.visibility = "hidden";
-            console.log(loginID);
             this.setState({redirect: true, loginID})
         }
 
@@ -31,7 +30,6 @@ class LogIn extends React.Component
    render(){
 
         let {redirect, loginID} = this.state;
-        console.log("render", loginID);
        return <div className="log-in">
            <form className="login-form">
                <h1 className="error-message" style={{ visibility: "hidden" }}>Please enter your ID</h1>

@@ -8,7 +8,6 @@ const initialState = {
 };
 
 const byId = (state={}, action) => {
-    console.log("by id: ", state, action);
 
     switch (action.type) {
         case 'FETCH_USER_SUCCESS':
@@ -24,7 +23,6 @@ const byId = (state={}, action) => {
 }
 
 const allIds = (state=[], action) => {
-    console.log("all id: ", state, action);
 
     switch (action.type) {
         case 'FETCH_USER_SUCCESS':
@@ -39,7 +37,6 @@ const allIds = (state=[], action) => {
 }
 
 const loggedIn = (state=[], action) => {
-    console.log(" logged in ", state, action);
 
     switch (action.type) {
         case 'FETCH_USER_SUCCESS':
@@ -55,7 +52,7 @@ const loggedIn = (state=[], action) => {
 
 
 
-export const getUserById = (state, id) => {console.log("in user red:", state.byId[id]); return state.byId[id]};
+export const getUserById = (state, id) => {return state.byId[id]};
 
 export default combineReducers({
     byId,
