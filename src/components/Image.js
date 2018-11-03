@@ -8,9 +8,7 @@ import {fetchImages} from '../api/fetch';
 import "../styles/Image.less";
 
 
-
-class Image extends React.Component
-{
+class Image extends React.Component {
 
     constructor(props) {
         super(props);
@@ -32,8 +30,7 @@ class Image extends React.Component
     }
 
 
-    readURL(e)
-    {
+    readURL(e) {
         console.log("READ!!");
         document.getElementById("tableBanner").style.display = "block";
         let input = document.querySelector('#uploadBannerImage');
@@ -43,7 +40,7 @@ class Image extends React.Component
             let bannerImage = document.getElementById('tableBanner');
 
             reader.onload = function (e) {
-            bannerImage.src =  e.target.result;
+                bannerImage.src = e.target.result;
             };
             reader.readAsDataURL(input.files[0]);
             let imgData = this.getBase64Image(bannerImage);
@@ -59,7 +56,7 @@ class Image extends React.Component
         modalImg.src = src;
 
         let modalHeader = document.querySelector(".modal-header");
-        modalHeader.innerHTML  = title;
+        modalHeader.innerHTML = title;
     }
 
     closeHandler() {
@@ -67,11 +64,10 @@ class Image extends React.Component
         modal.style.display = 'none';
     }
 
-    render(){
-        console.log("*************************** ",this.props, this.props.location);
+    render() {
+        console.log("*************************** ", this.props, this.props.location);
 
         const {images} = this.props;
-
 
 
         if (!this.props.location && (!images || images.id === undefined)) {
@@ -83,25 +79,33 @@ class Image extends React.Component
 
         console.log("Images after fetching ", images);
 
-        if(!this.props.location){
+        if (!this.props.location) {
             return <img src={images.images[0][2]}/>
         }
 
         console.log("MORE");
 
 
+        return (<div>
+            <h1 className={"image-header"}>{this.props.location.state.name} </h1>
+            <div className={"image"}>
+                <div>
+                    <img src="" id="tableBanner"/>
+                    <input type='file' id="uploadBannerImage" onChange={(e) => this.readURL(e)}/>
 
-        return (<div >
-
-            <input type='file' id="uploadBannerImage" onChange={(e) => this.readURL(e)} />
-            <img src="" id="tableBanner" />
+                </div>
+            </div>
 
 
-            {images.images.map((element, ind)=> <div key={ind} className={"image-container"}>
-                <h3 className={"image-name"}>{element[0]}</h3>
-                <img className={"images-mini"} src={element[2]} onClick={(e, src, title) => this.mainImageHandler(e, element[1], element[0])}/>
+            {images.images.map((element, ind) => <div key={ind} className={"image"}>
+                    <div><img className={"images-mini"} src={element[2]}
+                              onClick={(e, src, title) => this.mainImageHandler(e, element[1], element[0])}/>
+                        <h3 className={"image-name"}>{element[0]}</h3>
+                    </div>
                 </div>
             )}
+
+
 
             <div id="myModal" className={"modal"}>
                 <h3 className={"modal-header"}></h3>
@@ -114,10 +118,10 @@ class Image extends React.Component
 }
 
 export default connect((state, props) => {
-    console.log("IN CONN:", props, props.id);
-    let images = [];
-       if(props.location)  images = getImagesById(state, props.location.state.id);
-       else  images= getImagesById(state, props.id);
+        console.log("IN CONN:", props, props.id);
+        let images = [];
+        if (props.location) images = getImagesById(state, props.location.state.id);
+        else images = getImagesById(state, props.id);
         return {images};
     }, (dispatch) => ({
         fetchImagesById: (id) => fetchImages(id)(dispatch)

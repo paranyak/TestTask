@@ -40,7 +40,7 @@ class Album extends React.Component {
                 <h1 className={"error-message"}>USER NOT FOUND </h1>)
         } else {
             albumPreview = (<div>
-                <h1 className={"user-name"}>Hi, {user.name} </h1>
+                <h1 className={"album-header"}>Hi, {user.name} </h1>
                 {user.pictures.map((album, ind)=> <div className={"album"} key={ind}>
                     <Link className={"album-link"} to={ {pathname: `/picture/${user.id}/${album.title}`, state:{name: album.title, type:"imagesPage", id:album.id}}}>
                         <Image name={album.title} id={album.id}/>
