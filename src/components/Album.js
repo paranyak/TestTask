@@ -3,6 +3,7 @@ import React from "react";
 import {getUserById} from "../reducers";
 import {fetchUser} from '../api/fetch';
 import Image from './Image'
+import Logout from './Logout'
 
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom'
@@ -35,6 +36,7 @@ class Album extends React.Component {
                 <h1 className={"error-message"}>USER NOT FOUND </h1>)
         } else {
             albumPreview = (<div>
+                <Logout/>
                 <h1 className={"album-header"}>Hi, {user.name} </h1>
                 {user.pictures.map((album, ind)=> <div className={"album"} key={ind}>
                     <Link className={"album-link"} to={ {pathname: `/picture/${user.id}/${album.title}`, state:{name: album.title, type:"imagesPage", id:album.id}}}>

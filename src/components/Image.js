@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {getImagesById} from "../reducers";
 import {fetchImages} from '../api/fetch';
 
+import Logout from './Logout';
 import "../styles/Image.less";
 
 
@@ -79,6 +80,7 @@ class Image extends React.Component {
         }
 
         return (<div>
+            <Logout/>
             <h1 className={"image-header"}>{this.props.location.state.name} </h1>
             <div className={"image"}>
                 <div>

@@ -1,1 +1,1 @@
-To start - npm start and in ./src/data json-server --watch db.json
+To start - npm start
